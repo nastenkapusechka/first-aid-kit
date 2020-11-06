@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header"></header>
+<div class="container mt-5">
+    <h1>List</h1>
+    <h3 th:each="el : ${pills}" class="alert alert-info mt-2"></h3>
+    <p th:text="${el.name}"></p>
+    <p th:text="${el.form}"></p>
+    <a th:href=" 'show/' + ${el.id}">More</a>
+</div>
+<div th:insert="blocks/footer"></div>
+</body>
+</html>
