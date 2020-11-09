@@ -1,14 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>About</title>
+    <title>Searching</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <header th:insert="blocks/header"></header>
-<div class="container mt-5">
-    <h1>About</h1>
+<div class="container mt-5 mb-5">
+    <h1>Search by name</h1>
+    <form action="/search" method="post">
+        <input type="text" placeholder="Enter the name of pill" name="name" class="form-control"><br>
+        <button type="submit" class="btn btn-success">Search...</button>
+    </form>
 </div>
 <div th:insert="blocks/footer"></div>
 </body>

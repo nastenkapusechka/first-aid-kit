@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header"></header>
+<div class="container mt-5 mb-5">
+    <h1>Edit</h1>
+    <div th:each="el : ${pills}">
+        <form method="post">
+            <input type="text" th:value="${el.name}" placeholder="Enter the name of pill" name="name" class="form-control"><br>
+            <textarea placeholder="Enter the description of pill" name="description" class="form-control" th:text="${el.description}"/><br>
+            <input type="text" th:value="${el.form}" placeholder="Enter the form of pill" name="form" class="form-control"><br>
+            <input type="text" th:value="${#dates.format(el.date, 'dd-MM-yyyy')}" placeholder="Shelf life" name="date" class="form-control"><br>
+            <button type="submit" class="btn btn-success">Update</button>
+        </form>
+    </div>
+</div>
+<div th:insert="blocks/footer"></div>
+</body>
+</html>

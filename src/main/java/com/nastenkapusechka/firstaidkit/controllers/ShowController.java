@@ -15,7 +15,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class ShowController {
@@ -51,7 +53,7 @@ public class ShowController {
     }
 
     @GetMapping("/add/form")
-    public String addForm(Model model) {
+    public String addForm() {
         return "add";
     }
 
@@ -66,4 +68,63 @@ public class ShowController {
         model.addAttribute("pills", pills);
         return "details";
     }
+
+    @GetMapping("/show/{id}/edit")
+    public String edit(@PathVariable(value = "id") long id, Model model) {
+        if (!repository.existsById(id)) {
+            return "redirect:/";
+        }
+        Optional<Pill> pill = repository.findById(id);
+        ArrayList<Pill> pills = new ArrayList<>();
+        pill.ifPresent(pills :: add);
+        model.addAttribute("pills", pills);
+        return "edit";
+    }
+
+    @PostMapping("/show/{id}/edit")
+    public String update(@PathVariable(value = "id") long id,
+                         @RequestParam String name,
+                         @RequestParam String description,
+                         @RequestParam String form,
+                         @RequestParam String date,
+                         Model model) {
+        Pill pill = repository.findById(id).orElseThrow();
+        pill.setDescription(description);
+        pill.setName(name);
+        pill.setForm(form);
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+            Date newDate = format.parse(date);
+            pill.setDate(newDate);
+        } catch (ParseException ignore) {}
+
+        repository.save(pill);
+        return "redirect:/show";
+    }
+
+    @PostMapping("/show/{id}/remove")
+    public String remove(@PathVariable(value = "id") long id, Model model) {
+        Pill pill = repository.findById(id).orElseThrow();
+        repository.delete(pill);
+        return "redirect:/show";
+    }
+
+    @GetMapping("/search")
+    public String search(){
+        return "search";
+    }
+
+    @PostMapping("/search")
+    public String searchResult(@RequestParam String name, Model model){
+
+        List<Pill> list = new ArrayList<>();
+        repository.findAll().forEach(list :: add);
+        List<Pill> res = list.stream()
+                .filter(p -> p.getName().equals(name))
+                .collect(Collectors.toList());
+        model.addAttribute("pills", res);
+        return "show";
+    }
 }
+

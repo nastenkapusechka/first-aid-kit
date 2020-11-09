@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>List</title>
+    <title>Details</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -12,8 +12,10 @@
         <h3 th:text="${el.name}"></h3>
         <p th:text="${el.description}"></p>
         <p th:text="${#dates.format(el.date, 'dd-MM-yyyy')}"></p>
-        <a th:href=" 'show/' + ${el.id} + '/edit'" class="btn btn-warning">Edit</a>
-        <a th:href=" 'show/' + ${el.id} + '/remove'" class="btn btn-warning">Remove</a>
+        <a th:href="${el.id} + '/edit'" class="btn btn-warning">Edit</a><br><br>
+        <form th:action="${el.id} + '/remove'" method="post">
+            <button type="submit" class="btn btn-warning">Remove</button>
+        </form>
     </div>
 </div>
 <div th:insert="blocks/footer"></div>
