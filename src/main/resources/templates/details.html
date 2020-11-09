@@ -8,11 +8,12 @@
 <body>
 <header th:insert="blocks/header"></header>
 <div class="container mt-5">
-    <h1>List</h1>
     <div th:each="el : ${pills}" class="alert alert-info mt-2">
         <h3 th:text="${el.name}"></h3>
-        <p th:text="${el.form}"></p>
-        <a th:href=" 'show/' + ${el.id}" class="btn btn-warning">More</a>
+        <p th:text="${el.description}"></p>
+        <p th:text="${#dates.format(el.date, 'dd-MM-yyyy')}"></p>
+        <a th:href=" 'show/' + ${el.id} + '/edit'" class="btn btn-warning">Edit</a>
+        <a th:href=" 'show/' + ${el.id} + '/remove'" class="btn btn-warning">Remove</a>
     </div>
 </div>
 <div th:insert="blocks/footer"></div>
